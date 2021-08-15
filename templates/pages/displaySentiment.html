@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Emo Analyse</title>
+
+  <!-- You can download css and js from https://github.com/mistic100/jQCloud/tree/master/dist -->
+    <link rel="stylesheet" href="../static/css/jqcloud.min.css">
+    <!-- we included some bootstrap css and js to make our page look nice -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- You need to include jquery before the jqcloud.js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/js/jqcloud.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- bootstrap js-->
+    <script src="../static/js/bootstrap.min.js"></script>
+	
+
+	
+	
+	 <script> 
+	$(document).ready(function () { 
+   // on page load this will fetch data from our flask-app asynchronously 
+    $.ajax({url: '/displaySentiment', success: function (data) { 
+        // returned data is in string format we have to convert it back into json format 
+       var words_data = $.parseJSON(data); 
+	   console.log("words_data",words_data); 
+	   console.log("hello"); 
+      // we will build a word cloud into our div with id=word_cloud 
+       // we have to specify width and height of the word 
+         $('#word_cloud').jQCloud(words_data, {
+           width: 1200,
+           height: 300,
+		   classPattern: null,
+		   colors:["#03ff51"],
+		   autoResize: true,
+		   fontSize: {
+		   from: 0.1,
+		   to: 0.02}
+		  
+		   
+       });
+
+   }}); 
+   
+   
+   
+    $.ajax({url: '/displayPositive', success: function (data) { 
+        // returned data is in string format we have to convert it back into json format 
+       var words_positive = $.parseJSON(data); 
+	   console.log("words_data",words_positive); 
+	   console.log("positive"); 
+      // we will build a word cloud into our div with id=word_cloud 
+       // we have to specify width and height of the word 
+         $('#word_cloudPos').jQCloud(words_positive, {
+           width: 1200,
+           height: 300,
+		   classPattern: null,
+		   colors: ["#49f3dc"],
+		   autoResize: true,
+		   fontSize: {
+		   from: 0.1,
+		   to: 0.02}
+		  
+		   
+       });
+
+   }}); 
+   
+   
+   $.ajax({url: '/displayNegative', success: function (data) { 
+        // returned data is in string format we have to convert it back into json format 
+       var words_negative = $.parseJSON(data); 
+	   console.log("words_data",words_negative); 
+	   console.log("negative"); 
+      // we will build a word cloud into our div with id=word_cloud 
+       // we have to specify width and height of the word 
+         $('#word_cloudNeg').jQCloud(words_negative, {
+           width: 1200,
+           height: 300,
+		   classPattern: null,
+		   colors: ["#e60000"],
+		   autoResize: true,
+		   fontSize: {
+		   from: 0.1,
+		   to: 0.02}
+		  
+		   
+       });
+
+   }}); 
+   
+   
+    $.ajax({url: '/sentimentDistribution', success: function (data) { 
+        // returned data is in string format we have to convert it back into json format 
+       var response = $.parseJSON(data);
+	  
+	   console.log("response",response["NEGATIVE"]);
+	   
+	   var pos =response["POSITIVE"];
+	   var neg = response["NEGATIVE"];
+	   var ctxD = document.getElementById("doughnutChart").getContext('2d');
+	   var myLineChart = new Chart(ctxD, {
+	   type: 'doughnut',
+	   data: {
+	   labels: ["NEGATIVE", "POSITIVE"],
+	   datasets: [{
+	   data: [neg, pos],
+	   backgroundColor: ["#F7464A", "#46BFBD"],
+	   hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"],
+	   color:["#fffbf7"]
+	   }]
+	   },
+	   options: {
+	   responsive: true
+	   }
+	   });
+      
+     
+
+   }}); 
+ });
+	</script>
+	
+	
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.btn {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: RoyalBlue;
+}
+
+
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bg-image {
+  /* The image used */
+  background-image: url("../../static/images/images.jfif");
+  
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  
+  /* Full height */
+  height: 248%; 
+  
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-text {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */ 
+  color: #e71414;
+  font-weight: bold;
+  border: 3px solid #f6f536;
+  position: absolute;
+  top: 211px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+
+
+.bg-text2 {
+  background-color: rgb(0,0,0); /* Fallback color */
+ background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: #4965ee;
+  font-weight: bold;
+  border: 3px solid #c9c24b;
+  position: absolute;
+  top: 639px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+
+
+.bg-text3 {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */ 
+  color: #a7cb50;
+  font-weight: bold;
+  border: 3px solid #3eb094;
+  position: absolute;
+  top: 1063px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+
+
+.bg-text4 {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */ 
+  color: white;
+  font-weight: bold;
+  border: 3px solid #2929b6;
+  position: absolute;
+  top: 1537px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+
+
+</style>
+
+</head>
+<!-- <body style ="background-color:rgb(255, 191, 128)"> -->
+
+    <!-- <div class="container"> -->
+	 <!-- <button class="btn" onclick="redirect()"><i class="fa fa-home"></i></button> -->
+	  <!-- <script> -->
+			<!-- function redirect() { -->
+				 <!-- window.location = "/upload"; -->
+				<!-- } -->
+		  <!-- </script> -->
+        <!-- <div class="jumbotron "> -->
+		  <!-- <div class="text-center "> -->
+		  <!-- <center> -->
+            <!-- <h1>Visualize Emo Analyse</h1> -->
+		  <!-- </center> -->
+		 
+		 
+			<!-- </div> -->
+			
+			
+        <!-- </div> -->
+
+       <!-- here JQCloud will add the html for the word cloud -->
+		
+        <!-- <div class="row"> -->
+            <!-- <center> -->
+			<!-- <div style="  border: 2px solid red; border-radius: 12px; background-color:rgb(255, 204, 204)  "> -->
+			    <!-- <h2> Frequent words identified </h2> -->
+                <!-- <div id="word_cloud"> -->
+                <!-- </div> -->
+			<!-- </div> -->
+			<!-- </br> -->
+			<!-- <div style="  border: 2px solid black; border-radius: 12px;background-color:rgb(204, 255, 255) "> -->
+				<!-- <h2> Frequent positive words identified </h2> -->
+				 <!-- <div id="word_cloudPos"> -->
+                <!-- </div> -->
+			<!-- </div> -->
+			<!-- </br> -->
+			<!-- <div style=" border: 2px solid blue; border-radius: 12px; background-color:rgb(153, 153, 255)"> -->
+			
+				<!-- <h2 style "color: #4CAF50;"> Frequent negative words identified </h2> -->
+				 <!-- <div  id="word_cloudNeg"> -->
+                <!-- </div> -->
+	
+			<!-- </div> -->
+			<!-- </br> -->
+			<!-- <center> <h2> Sentiment distribution (POSITIVE vs NEGATIVE) </h2> </center> -->
+				
+				 <!-- <canvas id="doughnutChart" style="max-width: 500px; max-height: 400px;"></canvas> -->
+            <!-- </center> -->
+       
+		<!-- </div> -->
+    <!-- </div> -->
+	
+
+
+<!-- </body> -->
+
+	<!-- <script> -->
+	<!-- document.getElementById("view").addEventListener("click", function() { -->
+
+  <!-- console.log("inside view"); -->
+  <!-- var settings = { -->
+  <!-- "async": true, -->
+  <!-- "crossDomain": true, -->
+  <!-- "url": "/displaySentiment", -->
+  <!-- "method": "POST", -->
+  <!-- "headers": { -->
+    <!-- "cache-control": "no-cache", -->
+    <!-- "postman-token": "4872044e-41f1-2957-db01-b9202f6e80a7" -->
+  <!-- }, -->
+  <!-- "processData": false, -->
+  <!-- "contentType": false, -->
+  <!-- "mimeType": "multipart/form-data" -->
+<!-- } -->
+
+<!-- $.ajax(settings).done(function (response) { -->
+ <!-- // returned data is in string format we have to convert it back into json format -->
+       <!-- var words_data = $.parseJSON(response); -->
+	   <!-- console.log("words_data",words_data); -->
+	   <!-- console.log("hello"); -->
+       <!-- // we will build a word cloud into our div with id=word_cloud -->
+       <!-- // we have to specify width and height of the word -->
+       <!-- $('#word_cloud').jQCloud(words_data); -->
+
+<!-- }); -->
+<!-- }); -->
+	<!-- </script> -->
+
+
+
+
+<body>
+
+ <button class="btn" onclick="redirect()"><i class="fa fa-home"></i></button>
+	  <script>
+			function redirect() {
+				 window.location = "/upload";
+				}
+		  </script>
+
+<div class="bg-image"></div>
+
+<br>
+<br>
+<div class="bg-text">
+
+
+			<div >
+			    <h2> <u> Frequent words identified </u> </h2>
+                <div id="word_cloud">
+                </div>
+			</div>
+</div>
+			
+<div class="bg-text2">
+			
+			<div >
+				<h2> <u> Frequent positive words identified </u> </h2>
+				 <div id="word_cloudPos">
+                </div>
+			</div>
+
+</div>
+<div class="bg-text3">
+
+
+			<div >
+			
+				<h2 > <u> Frequent negative words identified </u> </h2>
+				 <div  id="word_cloudNeg">
+                </div>
+	
+			</div>
+</div>
+
+<div class="bg-text4">
+
+			<h2> <u > Sentiment distribution (POSITIVE vs NEGATIVE) </u> </h2> 
+				 <!-- <button type="button" class=" btn btn-block  btn-primary" id="view" >View</button> -->
+				 <canvas id="doughnutChart" style="max-width: 1300px; max-height: 400px;"></canvas>
+
+</div>
+
+
+</body>
+
+</html>

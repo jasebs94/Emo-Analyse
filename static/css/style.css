@@ -1,0 +1,95 @@
+.loginbg {
+	background-repeat: no-repeat;
+	background-color: #075c25;
+	background-image: url("../images/login_bg.jpg");
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-size: cover;
+}
+.loginarea {
+	background: #286090;
+	padding: 10%;
+}
+.loginarea .form-group label {
+	color: #fff;
+	margin-bottom: 0px;
+	font-size: 12px;
+}
+.loginarea::placeholder {
+	color: #fff;
+	font-weight: bold;
+}
+.loginarea .btn-block {
+	margin-top: 12%;
+	border-radius: 5px;
+	height: 50px;
+	background-color: #fff;
+	border: 0px;
+	color: #078555;
+	font-weight: bold;
+	margin-bottom: 5%;
+}
+
+.loginarea .form-control {
+	
+	width: 100%;
+	height: calc(1.5em + .75rem + 2px);
+	padding: .375rem .0rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #fff;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid #fff;
+	border-radius: 0;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.passwrd::placeholder {
+	font-size: 50px!important;
+}
+
+
+.bg-text {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bg-image {
+  /* The image used */
+  background-image: url("photographer.jpg");
+  
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  
+  /* Full height */
+  height: 100%; 
+  
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

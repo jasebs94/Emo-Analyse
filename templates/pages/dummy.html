@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Emo-Analyse</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+
+<link rel="stylesheet" type="text/css" href="../../static/css/dummy.css"> 
+<!------ Include the above in your HEAD tag ---------->
+</head>
+
+<body>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <!-- <div class="fadeIn first"> -->
+      <!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
+    <!-- </div> -->
+
+    <!-- Login Form -->
+    <form action="" method="post" name="login">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+      <input type="submit" class="fadeIn fourth" onclick= "loginFunction()" value="Log In">
+	  
+	  
+	  
+	  <script>
+function loginFunction() {
+  console.log("inside..");
+  var user_id=document.getElementById("login").value;
+  var password = document.getElementById("password").value;
+  console.log(user_id,password);
+  var fdata = new FormData();
+  fdata.append("user_id",user_id);
+  fdata.append("password",password);
+  var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "/authenticate/login",
+  "data":fdata,
+  "method": "POST",
+  "headers": {
+    "cache-control": "no-cache",
+    "postman-token": "4872044e-41f1-2957-db01-b9202f6e80a7"
+  },
+  "processData": false,
+  "contentType": false,
+  "mimeType": "multipart/form-data"
+}
+
+$.ajax(settings).done(function (response) {
+	console.log(response);
+	var data=JSON.parse(response)
+	console.log(data);
+	console.log(data['response']['msg']);
+	var status=data['response']['status'];
+	
+	if (status==false)
+	{
+	document.getElementById("LoginNotification").innerHTML="Invalid Username or Password";
+	}
+	else
+	{
+	document.getElementById("LoginNotification").innerHTML="Success";
+  window.location = "/upload";
+	}
+});
+  
+}
+</script>
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" id="LoginNotification" href="#"></a>
+    </div>
+
+  </div>
+</div>
+
+
+</body>
+</html>

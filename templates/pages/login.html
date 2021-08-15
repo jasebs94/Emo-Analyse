@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Emo-Analyse</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- <script> -->
+<!-- $("loginButton").click(function(e) { -->
+    <!-- alert("test"); -->
+<!-- }); -->
+<!-- </script> -->
+
+
+<link rel="stylesheet" type="text/css" href="../../../static/css/style.css">  
+</head>
+<body>
+<div class="container"><div class="logo text-center " ><img src="../../static/images/logo.png" class="img-fluid"> <h1 class="text-center ">Emo Analyse</h1></div></div>
+</br>
+<div class="loginarea">
+ <form action="" method="post" name="login">
+                           <div class="form-group">
+							<div class="text-center ">
+                              <label  for="email">User ID</label>
+                              <input type="text" name="user_id"   style="width:170px;"  id="user_id"  placeholder="Enter User ID">
+							  </div>
+                           </div>
+						   </br>
+                           <div class="form-group ">
+								<div class="text-center">
+                              <label for="pwd" >Password</label>
+                              <input type="password" name="password" id="password"    style="width:170px;    placeholder="Enter password">
+								</div>
+						   </div>
+                         
+                           <div class="text-center ">
+                              <button type="button" class=" btn btn-primary" id="loginButton" onclick="loginFunction()">Login</button>
+							  </div>
+							  
+<script>
+function loginFunction() {
+  console.log("inside..");
+  var user_id=document.getElementById("user_id").value;
+  var password = document.getElementById("password").value;
+  console.log(user_id,password);
+  var fdata = new FormData();
+  fdata.append("user_id",user_id);
+  fdata.append("password",password);
+  var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "/authenticate/login",
+  "data":fdata,
+  "method": "POST",
+  "headers": {
+    "cache-control": "no-cache",
+    "postman-token": "4872044e-41f1-2957-db01-b9202f6e80a7"
+  },
+  "processData": false,
+  "contentType": false,
+  "mimeType": "multipart/form-data"
+}
+
+$.ajax(settings).done(function (response) {
+	console.log(response);
+	var data=JSON.parse(response)
+	console.log(data);
+	console.log(data['response']['msg']);
+	var status=data['response']['status'];
+	
+	if (status==false)
+	{
+	document.getElementById("LoginNotification").innerHTML="Invalid Username or Password";
+	}
+	else
+	{
+	document.getElementById("LoginNotification").innerHTML="Success";
+  window.location = "/upload";
+	}
+});
+  
+}
+</script>
+                           <div class="form-group">
+								
+                               <p class="text-center" style="color:red" id="LoginNotification">{{msg}}</p>
+                           </div>
+                          
+                         
+</form>
+
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
